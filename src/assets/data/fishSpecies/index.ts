@@ -1,0 +1,16 @@
+export const SpeciesAroundFloripa = [
+  "Robalo (Snook)",
+  "Tainha (Mullet)",
+  "Garoupa (Grouper)",
+  "Sororoca (Jacks)",
+  "Pampo (Pompano)",
+  "Pescada (Whiting)",
+  "Cação (Shark)",
+  "Corvina (Croaker)",
+  "Dourado (Mahi-Mahi)",
+  "Marlin Azul (Blue Marlin)",
+  "Atum (Tuna)",
+  "Serra (Spanish Mackerel)",
+  "Pescada Amarela (Yellow Croaker)",
+  "Anchova (Anchovy)",
+];
