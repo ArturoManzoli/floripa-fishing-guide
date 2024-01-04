@@ -7,11 +7,11 @@
       <v-container>
         <v-row>
           <v-col cols="12" md="6">
-            <v-autocomplete
+            <v-combobox
               label="Species"
               v-model="currentCatch.species"
               :items="SpeciesAroundFloripa"
-            ></v-autocomplete>
+            ></v-combobox>
           </v-col>
 
           <v-col cols="12" md="6">
@@ -62,24 +62,51 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
               label="Weather"
               v-model="currentCatch.weather"
+              :items="weatherConditions"
+              outlined
+              dense
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              label="Wind Speed (m/s)"
+              v-model="currentCatch.windSpeed"
+              @input="handleWindSpeedInput"
+              :rules="numberRules"
+              type="text"
             ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-select
+              label="Wind direction"
+              v-model="currentCatch.windDirection"
+              :items="windDirections"
+              outlined
+              dense
+            ></v-select>
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
               label="Tide"
               v-model="currentCatch.tide"
-            ></v-text-field>
+              :items="tideStates"
+              outlined
+              dense
+            ></v-select>
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
               label="Moon Phase"
               v-model="currentCatch.moon"
-            ></v-text-field>
+              :items="moonPhases"
+              outlined
+              dense
+            ></v-select>
           </v-col>
 
           <v-col cols="12" md="6">
@@ -96,6 +123,18 @@
         </v-row>
       </v-container>
     </v-form>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+        color="primary"
+        :disabled="!valid"
+        @click="saveDialog"
+        class="mr-4"
+      >
+        Save
+      </v-btn>
+      <v-btn color="primary" @click="closeDialog">Cancel</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -103,13 +142,22 @@
 import { ref, reactive } from "vue";
 import { SpeciesAroundFloripa } from "@/assets/data/fishSpecies";
 import { CatchData } from "@/types";
-import { formatDate, formatTime } from "@/helpers";
+import {
+  formatDate,
+  formatTime,
+  moonPhases,
+  tideStates,
+  weatherConditions,
+  windDirections,
+} from "@/helpers";
+import { useStore } from "vuex";
 
+const store = useStore();
 const now = new Date();
 const currentDate = formatDate(now);
 const currentTime = formatTime(now);
-
 const valid = ref(false);
+
 const currentCatch: CatchData = reactive({
   species: "",
   weight: "",
@@ -119,6 +167,8 @@ const currentCatch: CatchData = reactive({
   date: currentDate,
   time: currentTime,
   weather: "",
+  windSpeed: "",
+  windDirection: "",
   tide: "",
   moon: "",
   image: [],
@@ -135,5 +185,34 @@ const handleWeightInput = (value: string) => {
   if (regex.test(value) || value === "") {
     currentCatch.weight = value;
   }
+};
+
+const handleWindSpeedInput = (value: string) => {
+  const regex = /^-?\d*\.?\d*$/;
+  if (regex.test(value) || value === "") {
+    currentCatch.windSpeed = value;
+  }
+};
+
+const saveDialog = () => {
+  store.dispatch("addCatchToDatabase", currentCatch.value);
+  console.log(currentCatch);
+};
+
+const closeDialog = () => {
+  currentCatch.species = "";
+  currentCatch.weight = "";
+  currentCatch.location = "";
+  currentCatch.bait = "";
+  currentCatch.equipment = "";
+  currentCatch.date = currentDate;
+  currentCatch.time = currentTime;
+  currentCatch.weather = "";
+  currentCatch.windSpeed = "";
+  currentCatch.windDirection = "";
+  currentCatch.tide = "";
+  currentCatch.moon = "";
+  currentCatch.image = [];
+  currentCatch.notes = "";
 };
 </script>

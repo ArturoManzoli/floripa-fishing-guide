@@ -7,9 +7,15 @@ export interface CatchData {
   date: string;
   time: string;
   weather: string;
-  wind: string;
+  windDirection: string;
+  windSpeed: string;
   tide: string;
   moon: string;
   image: string[];
   notes: string;
+}
+
+export interface State {
+  currentCatch: CatchData;
+  catchesDatabase: CatchData[];
 }

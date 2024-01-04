@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <v-app-bar elevation="1">
       <v-app-bar-nav-icon class="ml-1" @click="drawer = !drawer"
         ><v-icon>mdi-menu</v-icon></v-app-bar-nav-icon
@@ -21,3 +21,9 @@ import { ref } from "vue";
 
 const drawer = ref(false);
 </script>
+<style>
+.app {
+  background-color: #fafafa;
+}
+</style>
+```
