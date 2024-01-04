@@ -10,3 +10,31 @@ export const formatTime = (date: Date) => {
   const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;
 };
+
+export const moonPhases = [
+  "New Moon",
+  "Waxing Crescent",
+  "First Quarter",
+  "Waxing Gibbous",
+  "Full Moon",
+  "Waning Gibbous",
+  "Last Quarter",
+  "Waning Crescent",
+];
+
+export const weatherConditions = [
+  "Sunny",
+  "Partly Cloudy",
+  "Scattered Clouds",
+  "Cloudy",
+  "Overcast",
+  "Windy",
+  "Rainy",
+  "Stormy",
+  "Snowy",
+  "Foggy",
+];
+
+export const windDirections = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+
+export const tideStates = ["Low", "Rising", "High", "Falling"];
