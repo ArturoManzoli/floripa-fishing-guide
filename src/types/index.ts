@@ -19,3 +19,17 @@ export interface State {
   currentCatch: CatchData;
   catchesDatabase: CatchData[];
 }
+
+export interface FlorianopolisRegion {
+  region: Region;
+}
+
+export interface Region {
+  name: string;
+  neighborhoods: Neighborhood[];
+}
+
+export interface Neighborhood {
+  name: string;
+  fishability?: number;
+}
