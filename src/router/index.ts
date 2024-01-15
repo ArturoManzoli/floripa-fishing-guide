@@ -4,6 +4,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomePage from "../pages/index.vue";
 import SpotsPage from "../pages/spots.vue";
 import SpotsByLocationPage from "../pages/spots/by-location.vue";
+import LocationDetails from "@/components/LocationDetails.vue";
 import SpotsByEquipmentPage from "../pages/spots/by-equipment.vue";
 import SpotsByBaitPage from "../pages/spots/by-bait.vue";
 import SpotsBySpeciesPage from "../pages/spots/by-species.vue";
@@ -24,6 +25,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/spots",
     name: "Spots",
     component: SpotsPage,
+  },
+  {
+    path: "/spots/by-location/:neighborhood",
+    name: "Spots By Neighborhood",
+    component: LocationDetails,
+    props: true,
   },
   {
     path: "/spots/by-location",

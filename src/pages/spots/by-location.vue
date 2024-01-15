@@ -8,34 +8,43 @@
       :key="region.name"
     >
       <v-expansion-panel variant="inset" :title="region.name">
-        <v-expansion-panel-text class="px-5 py-2">
-          <ul>
-            <li
-              v-for="neighborhood in region.neighborhoods"
+        <v-expansion-panel-text class="px-5 pt-2">
+          <div v-if="checkFishingSpots(region)">
+            <ul
+              v-for="neighborhood in sortNeighborhoods(region).neighborhoods"
               :key="neighborhood.name"
               :name="neighborhood.name"
             >
-              <div class="location-row text-h6">
-                <div
-                  @click="(e) => handleSelectNeighborhood(e)"
-                  style="cursor: pointer"
-                >
-                  {{ neighborhood.name }}
-                </div>
+              <li
+                v-if="neighborhood.fishability && neighborhood?.fishability > 0"
+              >
+                <div class="location-row text-body-1 font-weight-medium">
+                  <div
+                    @click="(e) => handleSelectNeighborhood(e)"
+                    style="cursor: pointer"
+                  >
+                    {{ neighborhood.name }}
+                  </div>
 
-                <v-rating
-                  v-model="neighborhood.fishability"
-                  color="#eaeaea"
-                  density="compact"
-                  active-color="#444444"
-                  empty-icon="mdi-fish"
-                  full-icon="mdi-fish"
-                  readonly
-                  style="cursor: default"
-                ></v-rating>
-              </div>
-            </li>
-          </ul>
+                  <v-rating
+                    v-model="neighborhood.fishability"
+                    color="#eaeaea"
+                    density="compact"
+                    active-color="#444444"
+                    empty-icon="mdi-fish"
+                    full-icon="mdi-fish"
+                    readonly
+                    style="cursor: default"
+                  ></v-rating>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div v-else>
+            <p class="text-body-1 font-weight-medium">
+              No spots in this region yet.
+            </p>
+          </div>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -45,11 +54,32 @@
 <script lang="ts" setup>
 import { florianopolisRegions } from "@/assets/data/locations";
 import { FlorianopolisRegion } from "@/types";
-const FloripaRegions: FlorianopolisRegion = florianopolisRegions;
-console.log("🚀 ~ FloripaRegions:", FloripaRegions);
+const FloripaRegions: FlorianopolisRegion[] = florianopolisRegions;
 
-const handleSelectNeighborhood = (e) => {
-  console.log(e.target.innerText);
+const sortNeighborhoods = (region: any) => {
+  const reorderedNeighborhoods = region.neighborhoods.sort((a: any, b: any) => {
+    if (a.fishability > b.fishability) return -1;
+    if (a.fishability < b.fishability) return 1;
+    return a.name.localeCompare(b.name);
+  });
+  return { ...region, neighborhoods: reorderedNeighborhoods };
+};
+
+const checkFishingSpots = (region: any) => {
+  return region.neighborhoods.some((neighborhood: any) => {
+    return neighborhood.fishability && neighborhood.fishability > 0;
+  });
+};
+
+const handleSelectNeighborhood = (e: MouseEvent) => {
+  const target = e.target as HTMLElement;
+  const neighborhoodName = target.innerText
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+  window.location.href = `${window.location.origin}/spots/by-location/${neighborhoodName}`;
 };
 </script>
 
