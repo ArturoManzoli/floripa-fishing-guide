@@ -20,16 +20,23 @@ export interface State {
   catchesDatabase: CatchData[];
 }
 
-export interface FlorianopolisRegion {
-  region: Region;
+export interface Neighborhood {
+  name: string;
+  fishability: number;
+  picture: string;
+  info: InfoType;
 }
 
-export interface Region {
+export interface FlorianopolisRegion {
   name: string;
   neighborhoods: Neighborhood[];
 }
 
-export interface Neighborhood {
-  name: string;
-  fishability?: number;
+export interface InfoType {
+  "Geographic Characteristics": string;
+  "Fish Species": string;
+  "Fishing Equipment": string;
+  Baits: string;
+  "Tips and Tricks": string;
+  "Different Fishing Techniques": string;
 }
