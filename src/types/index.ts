@@ -11,7 +11,7 @@ export interface CatchData {
   windSpeed: string;
   tide: string;
   moon: string;
-  image: string[];
+  image: File[];
   notes: string;
 }
 

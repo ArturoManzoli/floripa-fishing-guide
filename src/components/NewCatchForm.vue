@@ -195,7 +195,7 @@ const handleWindSpeedInput = (value: string) => {
 };
 
 const saveDialog = () => {
-  store.dispatch("addCatchToDatabase", currentCatch.value);
+  store.dispatch("addCatchToDatabase", currentCatch);
   console.log(currentCatch);
 };
 

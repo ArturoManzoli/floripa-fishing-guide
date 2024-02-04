@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-// Import your page components
 import HomePage from "../pages/index.vue";
 import SpotsPage from "../pages/spots.vue";
 import SpotsByLocationPage from "../pages/spots/by-location.vue";
@@ -11,10 +10,7 @@ import SpotsBySpeciesPage from "../pages/spots/by-species.vue";
 import SpotsForCastNetPage from "../pages/spots/cast-net.vue";
 import CatchesPage from "../pages/catches.vue";
 import EquipmentPage from "../pages/equipment.vue";
-// Import other pages as needed
 
-// Define your routes
-// Each route is a mapping of a path to a component
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -69,11 +65,9 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
-// Create the router instance
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL), // Use browser history
-  routes, // Add the routes to the router
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 });
 
-// Export the router
 export default router;
